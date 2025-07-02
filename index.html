@@ -3,77 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cancer Daily Horoscope</title>
+  <title>Choose Your Zodiac</title>
   <style>
     body {
       background-color: #fff0f6;
       font-family: 'Georgia', serif;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      padding: 40px;
       margin: 0;
     }
 
-    .card {
-      background: #fce4ec;
-      color: #5e1742;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(92, 3, 41, 0.1);
-      padding: 30px 25px;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-    }
-
     h1 {
-      font-size: 1.6rem;
       color: #9b59b6;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
-    .horoscope {
-      font-size: 1rem;
-      line-height: 1.6;
+    .zodiac-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      gap: 20px;
+      justify-content: center;
     }
 
-    .footer {
+    .zodiac {
+      font-size: 2.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: #5e1742;
+      transition: transform 0.2s;
+    }
+
+    .zodiac:hover {
+      transform: scale(1.2);
+    }
+
+    .label {
       font-size: 0.8rem;
-      margin-top: 20px;
       color: #c71585;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>♋ Cancer Daily Horoscope</h1>
-    <div class="horoscope" id="horoscope-text">Loading...</div>
-    <div class="footer">Updated daily • horoscope.com</div>
+  <h1>🔮 Select Your Zodiac Sign</h1>
+  <div class="zodiac-grid">
+    <a class="zodiac" href="aries.html">♈<div class="label">Aries</div></a>
+    <a class="zodiac" href="taurus.html">♉<div class="label">Taurus</div></a>
+    <a class="zodiac" href="gemini.html">♊<div class="label">Gemini</div></a>
+    <a class="zodiac" href="cancer.html">♋<div class="label">Cancer</div></a>
+    <a class="zodiac" href="leo.html">♌<div class="label">Leo</div></a>
+    <a class="zodiac" href="virgo.html">♍<div class="label">Virgo</div></a>
+    <a class="zodiac" href="libra.html">♎<div class="label">Libra</div></a>
+    <a class="zodiac" href="scorpio.html">♏<div class="label">Scorpio</div></a>
+    <a class="zodiac" href="sagittarius.html">♐<div class="label">Sagittarius</div></a>
+    <a class="zodiac" href="capricorn.html">♑<div class="label">Capricorn</div></a>
+    <a class="zodiac" href="aquarius.html">♒<div class="label">Aquarius</div></a>
+    <a class="zodiac" href="pisces.html">♓<div class="label">Pisces</div></a>
   </div>
-
-  <script>
-    async function fetchHoroscope() {
-      try {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const targetUrl = 'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign=4';
-        const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-        const html = await response.text();
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const paragraph = doc.querySelector('.main-horoscope p');
-
-        if (paragraph) {
-          document.getElementById('horoscope-text').textContent = paragraph.textContent.trim();
-        } else {
-          document.getElementById('horoscope-text').textContent = '🔮 Horoscope not found. Site may have updated.';
-        }
-      } catch (e) {
-        document.getElementById('horoscope-text').textContent = '❌ Could not load horoscope. Check connection or site structure.';
-      }
-    }
-
-    fetchHoroscope();
-  </script>
 </body>
 </html>
