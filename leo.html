@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leo Daily Horoscope</title>
+  <style>
+    body {
+      background-color: #fff0f6;
+      font-family: 'Georgia', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: #fce4ec;
+      color: #5e1742;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(92, 3, 41, 0.1);
+      padding: 30px 25px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #9b59b6;
+      margin-bottom: 15px;
+    }
+
+    .horoscope {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .footer {
+      font-size: 0.8rem;
+      margin-top: 20px;
+      color: #c71585;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>♌️ Leo Daily Horoscope</h1>
+    <div class="horoscope" id="horoscope-text">Loading...</div>
+    <div class="footer">Updated daily • horoscope.com</div>
+  </div>
+
+  <script>
+    async function fetchHoroscope() {
+      try {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const targetUrl = 'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign=5';
+        const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+        const html = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const paragraph = doc.querySelector('.main-horoscope p');
+
+        if (paragraph) {
+          document.getElementById('horoscope-text').textContent = paragraph.textContent.trim();
+        } else {
+          document.getElementById('horoscope-text').textContent = '🔮 Horoscope not found. Site may have updated.';
+        }
+      } catch (e) {
+        document.getElementById('horoscope-text').textContent = '❌ Could not load horoscope. Check connection or site structure.';
+      }
+    }
+
+    fetchHoroscope();
+  </script>
+</body>
+</html>
